@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-arabic: 'Amiri', 'Traditional Arabic', 'Noto Naskh Arabic', serif;
+
+    --color-cream-50: #fdfbf7;
+    --color-cream-100: #f8f1e5;
+    --color-cream-200: #efe3d0;
+    --color-ink: #0f172a;
+    --color-gold-400: #e8b04b;
+    --color-gold-500: #d97706;
+    --color-gold-600: #b45309;
+    --color-emerald-deep: #064e3b;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+    }
+
+    body {
+        @apply bg-cream-50 text-ink antialiased;
+    }
+
+    ::selection {
+        @apply bg-emerald-deep text-cream-50;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+    }
+}
+
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-full bg-emerald-900 px-6 py-3 text-sm font-semibold text-cream-50 shadow-sm transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-900/40 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-full border border-emerald-900/20 bg-white/60 px-6 py-3 text-sm font-semibold text-emerald-950 transition hover:border-emerald-900/40 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-900/30 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50;
+    }
+
+    .btn-gold {
+        @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-6 py-3 text-sm font-semibold text-emerald-950 shadow-sm transition hover:bg-gold-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-950;
+    }
+
+    [data-nav-link].is-active {
+        @apply text-emerald-600;
+    }
+
+    .field-input {
+        @apply w-full rounded-xl border border-emerald-900/15 bg-white px-4 py-3 text-sm text-ink shadow-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-800 focus:ring-2 focus:ring-emerald-900/15;
+    }
+}
+
+.pattern-islamic {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.12' stroke-width='1'%3E%3Cpath d='M28 0 56 28 28 56 0 28Z'/%3E%3Cpath d='M28 8 48 28 28 48 8 28Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 56px 56px;
+}
