@@ -1,13 +1,18 @@
 <?php
 
-foreach ([
+// Buat folder sementara di /tmp untuk cache Vercel
+$tmpDirectories = [
     '/tmp/views',
-    '/tmp/cache',
-    '/tmp/sessions',
-] as $directory) {
-    if (! is_dir($directory)) {
-        @mkdir($directory, 0777, true);
+    '/tmp/framework/sessions',
+    '/tmp/framework/views',
+    '/tmp/framework/cache'
+];
+
+foreach ($tmpDirectories as $dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
     }
 }
 
-require __DIR__.'/../public/index.php';
+// Forward request ke public/index.php
+require __DIR__ . '/../public/index.php';
