@@ -17,7 +17,7 @@
 
         <div class="mt-12 grid gap-8 lg:grid-cols-12">
             <div class="lg:col-span-4">
-                <div class="flex gap-3 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0" role="tablist" aria-label="Program unggulan">
+                <div class="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto overscroll-x-contain px-4 pb-2 sm:mx-0 sm:px-0 lg:flex-col lg:overflow-visible lg:pb-0" role="tablist" aria-label="Program unggulan">
                     @foreach ($programs as $index => $program)
                         <button
                             type="button"
@@ -26,7 +26,7 @@
                             aria-controls="panel-{{ $program['id'] }}"
                             aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
                             data-program-tab="{{ $program['id'] }}"
-                            class="group flex min-w-[220px] items-center gap-4 rounded-2xl border px-4 py-4 text-left transition-all duration-300 ease-in-out lg:min-w-0 border-emerald-900/15 bg-white shadow-sm hover:-translate-y-0.5 hover:translate-x-1 hover:border-emerald-900 hover:bg-emerald-950 hover:shadow-md hover:shadow-emerald-950/20 [&[aria-selected=true]]:border-emerald-900 [&[aria-selected=true]]:bg-emerald-900 [&[aria-selected=true]]:shadow-md [&[aria-selected=true]]:shadow-emerald-950/20"
+                            class="group flex min-w-[220px] snap-start items-center gap-4 rounded-2xl border px-4 py-4 text-left transition-all duration-300 ease-in-out lg:min-w-0 border-emerald-900/15 bg-white shadow-sm hover:-translate-y-0.5 hover:translate-x-1 hover:border-emerald-900 hover:bg-emerald-950 hover:shadow-md hover:shadow-emerald-950/20 [&[aria-selected=true]]:border-emerald-900 [&[aria-selected=true]]:bg-emerald-900 [&[aria-selected=true]]:shadow-md [&[aria-selected=true]]:shadow-emerald-950/20"
                         >
                             <span class="font-arabic text-lg text-gray-500 transition-colors duration-300 group-hover:text-white group-[[aria-selected=true]]:text-white">0{{ $index + 1 }}</span>
                             <span class="flex-1">

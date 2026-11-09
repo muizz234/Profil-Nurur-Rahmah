@@ -47,7 +47,7 @@
 
             @forelse ($gallery as $item)
                 @if ($loop->first)
-                    <div class="mt-10 columns-2 gap-4 md:columns-3 lg:gap-5">
+                    <div class="mt-10 columns-1 gap-4 sm:columns-2 md:columns-3 lg:gap-5">
                 @endif
 
                 <figure class="group mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-cream-50/10 bg-cream-50/5 transition duration-300 hover:border-gold-400/30 hover:bg-cream-50/10 lg:mb-5">
@@ -59,8 +59,8 @@
                     />
 
                     <figcaption class="flex items-center justify-between gap-3 px-4 py-3">
-                        <span class="text-xs font-medium text-cream-100/90">{{ $item['caption'] }}</span>
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-400/80">{{ $item['category'] }}</span>
+                        <span class="min-w-0 truncate text-[11px] font-medium text-cream-100/90 sm:text-xs">{{ $item['caption'] }}</span>
+                        <span class="shrink-0 text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-400/80">{{ $item['category'] }}</span>
                     </figcaption>
                 </figure>
 

@@ -22,7 +22,7 @@
             </a>
         </div>
 
-        <div class="mt-12 columns-2 gap-4 md:columns-3 lg:gap-5">
+        <div class="mt-12 columns-1 gap-4 sm:columns-2 md:columns-3 lg:gap-5">
             @foreach ($gallery as $item)
                 <figure class="mb-4 break-inside-avoid overflow-hidden rounded-2xl border border-cream-50/10 bg-cream-50/5 lg:mb-5">
                     <x-landing.smart-image
@@ -33,8 +33,8 @@
                     />
 
                     <figcaption class="flex items-center justify-between gap-3 px-4 py-3">
-                        <span class="text-xs font-medium text-cream-100/90">{{ $item['caption'] }}</span>
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-400/80">{{ $item['category'] }}</span>
+                        <span class="min-w-0 truncate text-[11px] font-medium text-cream-100/90 sm:text-xs">{{ $item['caption'] }}</span>
+                        <span class="shrink-0 text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-400/80">{{ $item['category'] }}</span>
                     </figcaption>
                 </figure>
             @endforeach

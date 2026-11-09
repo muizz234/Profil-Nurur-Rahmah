@@ -24,7 +24,7 @@
         </div>
 
         <div class="relative w-full max-w-md">
-            <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
+            <div class="rounded-3xl border border-slate-100 bg-white px-5 py-6 shadow-xl sm:px-8 sm:py-8">
                 <div class="flex flex-col items-center text-center">
                     <a href="{{ route('home') }}" class="transition hover:opacity-90" aria-label="Kembali ke beranda Pondok Pesantren Nurur Rahmah">
                         <x-landing.logo :src="$logo ?? null" round class="h-14 w-14" />

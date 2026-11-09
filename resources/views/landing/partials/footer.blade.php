@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="mailto:{{ $contact['email'] }}" class="transition hover:text-cream-50">{{ $contact['email'] }}</a>
+                        <a href="mailto:{{ $contact['email'] }}" class="break-all transition hover:text-cream-50">{{ $contact['email'] }}</a>
                     </li>
                     <li>{{ $contact['hours'] }}</li>
                 </ul>

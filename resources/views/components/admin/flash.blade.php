@@ -13,7 +13,7 @@
             <span>{{ session('success') }}</span>
         </div>
 
-        <button type="button" @click="show = false" class="text-emerald-700 transition hover:text-emerald-900" aria-label="Tutup notifikasi">
+        <button type="button" @click="show = false" class="-m-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-emerald-700 transition hover:bg-emerald-100 hover:text-emerald-900" aria-label="Tutup notifikasi">
             <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
                 <path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
@@ -36,7 +36,7 @@
             <span>{{ session('error') }}</span>
         </div>
 
-        <button type="button" @click="show = false" class="text-red-700 transition hover:text-red-900" aria-label="Tutup notifikasi">
+        <button type="button" @click="show = false" class="-m-1 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-red-700 transition hover:bg-red-100 hover:text-red-900" aria-label="Tutup notifikasi">
             <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
                 <path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>

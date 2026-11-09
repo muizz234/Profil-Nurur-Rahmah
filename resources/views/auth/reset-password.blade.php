@@ -71,7 +71,7 @@
                     @click="show = !show"
                     :aria-label="show ? 'Sembunyikan password' : 'Tampilkan password'"
                     :aria-pressed="show ? 'true' : 'false'"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 transition hover:text-emerald-600"
+                    class="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-md text-slate-500 transition hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40"
                 >
                     <svg x-show="!show" viewBox="0 0 24 24" class="h-5 w-5" fill="none" aria-hidden="true">
                         <path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -117,7 +117,7 @@
                     @click="show = !show"
                     :aria-label="show ? 'Sembunyikan konfirmasi password' : 'Tampilkan konfirmasi password'"
                     :aria-pressed="show ? 'true' : 'false'"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 transition hover:text-emerald-600"
+                    class="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-md text-slate-500 transition hover:text-emerald-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/40"
                 >
                     <svg x-show="!show" viewBox="0 0 24 24" class="h-5 w-5" fill="none" aria-hidden="true">
                         <path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

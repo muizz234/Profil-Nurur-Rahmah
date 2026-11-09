@@ -18,7 +18,7 @@
     </div>
 
     @isset($actions)
-        <div class="flex shrink-0 flex-wrap items-center gap-2">
+        <div class="flex w-full min-w-0 flex-col gap-2 sm:w-auto sm:shrink-0 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
             {{ $actions }}
         </div>
     @endisset

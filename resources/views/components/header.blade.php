@@ -34,11 +34,12 @@
     x-data="{ mobileMenuOpen: false, scrolled: false }"
     x-init="scrolled = window.pageYOffset > 20"
     @scroll.window="scrolled = (window.pageYOffset > 20)"
+    @keydown.escape.window="mobileMenuOpen = false; userMenuOpen = false"
     :class="scrolled ? 'border-b border-slate-100 bg-white/90 shadow-sm backdrop-blur-md' : 'border-b border-transparent bg-transparent'"
     class="sticky top-0 z-50 transition-all duration-300"
 >
     <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8" aria-label="Navigasi utama">
-        <a data-header-brand href="{{ $brandHref }}" class="flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label="Pondok Pesantren Nurur Rahmah — Beranda">
+        <a data-header-brand href="{{ $brandHref }}" @click="mobileMenuOpen = false" class="flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label="Pondok Pesantren Nurur Rahmah — Beranda">
             <x-landing.logo :src="$logo" round class="h-11 w-11 shrink-0 sm:h-12 sm:w-12 xl:h-14 xl:w-14" />
 
             <span data-header-brand-text class="min-w-0 text-center">
@@ -198,7 +199,7 @@
             :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
             :aria-label="mobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'"
             aria-controls="header-mobile-menu"
-            class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-white hover:text-emerald-600 lg:hidden"
+            class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-white hover:text-emerald-600 lg:hidden"
         >
             <svg x-show="!mobileMenuOpen" viewBox="0 0 24 24" class="h-5 w-5" fill="none" aria-hidden="true">
                 <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -220,7 +221,7 @@
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2"
-        class="lg:hidden"
+        class="max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-y-contain lg:hidden"
     >
         <div class="mx-auto max-w-7xl px-4 pb-5 pt-1 sm:px-6">
             <div class="rounded-2xl border border-slate-100 bg-white/95 p-3 shadow-sm backdrop-blur-md">
@@ -229,7 +230,7 @@
                         <a
                             href="{{ $item['href'] }}"
                             @click="mobileMenuOpen = false"
-                            class="rounded-xl px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+                            class="rounded-xl px-4 py-3 text-sm font-medium text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-700"
                         >
                             {{ $item['label'] }}
                         </a>

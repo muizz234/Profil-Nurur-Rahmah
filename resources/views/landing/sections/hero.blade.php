@@ -12,7 +12,7 @@
                     Sejak {{ $hero['year'] }} · Probolinggo
                 </span>
 
-                <h1 class="mt-6 text-4xl font-semibold leading-[1.08] tracking-tight text-cream-50 sm:text-5xl xl:text-6xl">
+                <h1 class="mt-6 text-3xl font-semibold leading-[1.08] tracking-tight text-cream-50 sm:text-4xl lg:text-5xl xl:text-6xl">
                     {{ $hero['title'] }}
                 </h1>
 
@@ -61,7 +61,7 @@
 <div class="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-emerald-900/10 bg-emerald-900/10 shadow-sm md:grid-cols-4">
         @foreach ($stats as $stat)
-            <div class="bg-cream-50/90 px-6 py-6 backdrop-blur">
+            <div class="bg-cream-50/90 px-4 py-6 backdrop-blur sm:px-6">
                 <p class="text-3xl font-semibold tracking-tight text-emerald-900">{{ $stat['value'] }}</p>
                 <p class="mt-1 text-sm font-medium text-slate-700">{{ $stat['label'] }}</p>
                 <p class="mt-0.5 text-xs text-slate-500">{{ $stat['hint'] }}</p>

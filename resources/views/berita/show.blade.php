@@ -47,7 +47,7 @@
                 </div>
             @endif
 
-            <div class="mt-8 text-base leading-relaxed text-slate-700">
+            <div class="mt-8 break-words [overflow-wrap:anywhere] text-base leading-relaxed text-slate-700">
                 {!! nl2br(e($berita->content)) !!}
             </div>
 
