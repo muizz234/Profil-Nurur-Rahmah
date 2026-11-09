@@ -39,10 +39,10 @@
     class="sticky top-0 z-50 transition-all duration-300"
 >
     <nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8" aria-label="Navigasi utama">
-        <a data-header-brand href="{{ $brandHref }}" @click="mobileMenuOpen = false" class="flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label="Pondok Pesantren Nurur Rahmah — Beranda">
-            <x-landing.logo :src="$logo" round class="h-11 w-11 shrink-0 sm:h-12 sm:w-12 xl:h-14 xl:w-14" />
+        <a data-header-brand href="{{ $brandHref }}" @click="mobileMenuOpen = false" class="flex min-w-0 items-center gap-2.5 py-0.5 leading-tight sm:gap-3" aria-label="Pondok Pesantren Nurur Rahmah — Beranda">
+            <x-landing.logo :src="$logo" round class="h-11 w-11 shrink-0 self-center sm:h-12 sm:w-12 xl:h-14 xl:w-14" />
 
-            <span data-header-brand-text class="min-w-0 text-center">
+            <span data-header-brand-text class="flex min-w-0 flex-col justify-center text-center">
                 <span data-header-brand-arabic dir="rtl" class="hidden w-full font-arabic text-center text-sm leading-tight text-emerald-700 sm:block xl:text-base">
                     معهد نور الرحمة الإسلامي
                 </span>
@@ -199,7 +199,7 @@
             :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
             :aria-label="mobileMenuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'"
             aria-controls="header-mobile-menu"
-            class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-white hover:text-emerald-600 lg:hidden"
+            class="inline-flex h-11 w-11 shrink-0 items-center justify-center self-center rounded-full border border-slate-200 bg-white/80 text-slate-700 transition hover:bg-white hover:text-emerald-600 lg:hidden"
         >
             <svg x-show="!mobileMenuOpen" viewBox="0 0 24 24" class="h-5 w-5" fill="none" aria-hidden="true">
                 <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
