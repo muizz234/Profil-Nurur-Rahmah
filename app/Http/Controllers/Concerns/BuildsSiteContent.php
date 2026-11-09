@@ -82,8 +82,12 @@ trait BuildsSiteContent
             return asset($path);
         }
 
+        if (config('filesystems.disks.public.driver') !== 'local') {
+            return Storage::disk('public')->url($path);
+        }
+
         if (Storage::disk('public')->exists($path)) {
-            return asset('storage/'.$path);
+            return Storage::disk('public')->url($path);
         }
 
         return null;

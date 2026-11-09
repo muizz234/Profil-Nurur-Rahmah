@@ -8,6 +8,7 @@
 @php
     $hasImage = false;
     $imageUrl = null;
+    $publicDiskIsLocal = config('filesystems.disks.public.driver') === 'local';
 
     if (filled($src)) {
         if (\Illuminate\Support\Str::startsWith($src, ['http://', 'https://'])) {
@@ -16,9 +17,9 @@
         } elseif (file_exists(public_path($src))) {
             $hasImage = true;
             $imageUrl = asset($src);
-        } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($src)) {
+        } elseif (! $publicDiskIsLocal || \Illuminate\Support\Facades\Storage::disk('public')->exists($src)) {
             $hasImage = true;
-            $imageUrl = asset('storage/'.$src);
+            $imageUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($src);
         }
     }
 @endphp

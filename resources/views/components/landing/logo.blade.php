@@ -2,14 +2,15 @@
 
 @php
     $logoUrl = null;
+    $publicDiskIsLocal = config('filesystems.disks.public.driver') === 'local';
 
     if (filled($src)) {
         if (\Illuminate\Support\Str::startsWith($src, ['http://', 'https://'])) {
             $logoUrl = $src;
         } elseif (file_exists(public_path($src))) {
             $logoUrl = asset($src);
-        } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($src)) {
-            $logoUrl = asset('storage/'.$src);
+        } elseif (! $publicDiskIsLocal || \Illuminate\Support\Facades\Storage::disk('public')->exists($src)) {
+            $logoUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($src);
         }
     }
 
