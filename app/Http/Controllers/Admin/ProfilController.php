@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Concerns\HandlesUploads;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateProfilRequest;
 use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProfilController extends Controller
@@ -29,30 +29,14 @@ class ProfilController extends Controller
     /**
      * Update the profile settings.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(UpdateProfilRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'hero_title' => ['required', 'string', 'max:255'],
-            'hero_subtitle' => ['required', 'string', 'max:1000'],
-            'hero_year' => ['required', 'string', 'max:10'],
-            'target_juz' => ['required', 'string', 'max:10'],
-            'total_santri' => ['required', 'string', 'max:10'],
-            'total_pengajar' => ['required', 'string', 'max:10'],
-            'history' => ['required', 'string'],
-            'vision' => ['required', 'string'],
-            'missions' => ['required', 'string'],
-            'leader_name' => ['required', 'string', 'max:255'],
-            'leader_title' => ['required', 'string', 'max:255'],
-            'leader_quote' => ['required', 'string'],
-            'leader_since' => ['required', 'string', 'max:255'],
-            'leader_photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'site_logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg,svg,webp', 'max:2048'],
-        ]);
+        $validated = $request->validated();
 
         $missions = $this->parseMissions($validated['missions']);
 
         $settings = collect($validated)
-            ->except(['leader_photo', 'site_logo'])
+            ->except(['leader_photo', 'site_logo', 'hero_background_image'])
             ->map(fn (mixed $value): mixed => is_string($value) ? trim($value) : $value)
             ->all();
 
@@ -67,6 +51,12 @@ class ProfilController extends Controller
             $logo = $this->storeImage($request->file('site_logo'), 'logos');
             $this->deleteImage(SiteSetting::get('site_logo'));
             $settings['site_logo'] = $logo;
+        }
+
+        if ($request->hasFile('hero_background_image')) {
+            $background = $this->storeImage($request->file('hero_background_image'), 'hero');
+            $this->deleteImage(SiteSetting::get('hero_background_image'));
+            $settings['hero_background_image'] = $background;
         }
 
         SiteSetting::setMany($settings);

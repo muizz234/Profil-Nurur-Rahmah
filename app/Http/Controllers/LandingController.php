@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Concerns\BuildsSiteContent;
 use App\Models\Berita;
-use App\Models\Galeri;
 use App\Models\Kegiatan;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -21,7 +20,7 @@ class LandingController extends Controller
         $settings = $this->siteSettings();
 
         $programs = $this->programs();
-        $gallery = $this->gallery();
+        $gallery = $this->galleryItems();
         $news = $this->news();
 
         return view('landing.index', [
@@ -30,6 +29,7 @@ class LandingController extends Controller
             'hero' => [
                 'title' => (string) $settings['hero_title'],
                 'subtitle' => (string) $settings['hero_subtitle'],
+                'background' => $this->imageUrl($settings['hero_background_image'] ?? null) ?? asset('images/hero-default.svg'),
                 'year' => (string) $settings['hero_year'],
                 'target_juz' => (string) $settings['target_juz'],
                 'total_santri' => (string) $settings['total_santri'],
@@ -62,7 +62,7 @@ class LandingController extends Controller
             'leader' => [
                 'name' => (string) $settings['leader_name'],
                 'title' => (string) $settings['leader_title'],
-                'image' => (string) $settings['leader_photo'],
+                'image' => $this->imageUrl($settings['leader_photo'] ?? null),
                 'since' => (string) $settings['leader_since'],
                 'quote' => (string) $settings['leader_quote'],
             ],
@@ -99,33 +99,6 @@ class LandingController extends Controller
                 'highlights' => [],
             ])
             ->values()
-            ->all();
-    }
-
-    /**
-     * Build the gallery list from the stored photos.
-     *
-     * @return array<int, array{image: string, alt: string, caption: string, category: string, aspect: string}>
-     */
-    private function gallery(): array
-    {
-        $aspects = ['aspect-[4/5]', 'aspect-square', 'aspect-[3/4]', 'aspect-[4/3]'];
-
-        return Galeri::query()
-            ->orderBy('id')
-            ->get()
-            ->values()
-            ->map(function (Galeri $item, int $index) use ($aspects): array {
-                $caption = $item->caption ?: $item->title;
-
-                return [
-                    'image' => $item->image_path,
-                    'alt' => $caption,
-                    'caption' => $caption,
-                    'category' => $item->category ?: 'Galeri',
-                    'aspect' => $aspects[$index % count($aspects)],
-                ];
-            })
             ->all();
     }
 

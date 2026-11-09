@@ -1,4 +1,4 @@
-@props(['class' => 'h-11 w-11', 'src' => null])
+@props(['class' => 'h-11 w-11', 'src' => null, 'round' => false])
 
 @php
     $logoUrl = null;
@@ -25,7 +25,7 @@
     <img
         src="{{ $logoUrl }}"
         alt="Logo Pondok Pesantren Nurur Rahmah"
-        {{ $attributes->merge(['class' => trim($class.' object-contain')]) }}
+        {{ $attributes->merge(['class' => trim($class.' object-contain'.($round ? ' rounded-full' : ''))]) }}
     >
 @else
     <span

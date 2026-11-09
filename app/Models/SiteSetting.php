@@ -37,8 +37,15 @@ class SiteSetting extends Model
      */
     public static function setMany(array $settings): void
     {
-        foreach ($settings as $key => $value) {
-            static::set($key, $value);
+        if ($settings === []) {
+            return;
         }
+
+        $rows = collect($settings)
+            ->map(fn (mixed $value, string $key): array => ['key' => $key, 'value' => $value])
+            ->values()
+            ->all();
+
+        static::upsert($rows, ['key'], ['value']);
     }
 }

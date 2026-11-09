@@ -4,7 +4,7 @@
 @section('description', 'Pondok Pesantren Nurur Rahmah memadukan tahfidz Al-Qur\'an, kajian kitab kuning, dan pendidikan formal dalam lingkungan yang hangat dan penuh keberkahan.')
 
 @section('content')
-    @include('landing.sections.hero', ['hero' => $hero, 'stats' => $stats])
+    @include('landing.sections.hero', ['hero' => $hero, 'stats' => $stats, 'logo' => $logo ?? null])
 
     @include('landing.sections.about', [
         'history' => $history,

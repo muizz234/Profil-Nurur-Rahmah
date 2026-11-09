@@ -10,8 +10,12 @@
                 tone="light"
             />
 
-            <a href="#kontak" class="btn-gold shrink-0">
-                Kunjungi pesantren
+            <a
+                href="{{ route('galeri.index') }}"
+                class="btn-gold shrink-0 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                aria-label="Lihat semua galeri kegiatan Pondok Pesantren Nurur Rahmah"
+            >
+                Lihat Semua Galeri
                 <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
                     <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>

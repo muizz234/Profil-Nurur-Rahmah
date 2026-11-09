@@ -66,7 +66,7 @@ class AdminSettingsTest extends TestCase
     {
         $admin = User::factory()->admin()->create();
 
-        $iframe = '<iframe src="https://maps.example.com/embed?q=probolinggo" width="600"></iframe>';
+        $iframe = '<iframe src="https://www.google.com/maps/embed?pb=abc" width="600"></iframe>';
 
         $response = $this->actingAs($admin)->post(route('admin.kontak.update'), [
             'address' => 'Alamat baru',
@@ -81,7 +81,7 @@ class AdminSettingsTest extends TestCase
         $this->assertSame('Alamat baru', SiteSetting::get('address'));
         $this->assertSame('halo@nururrahmah.sch.id', SiteSetting::get('email'));
         $this->assertSame(
-            'https://maps.example.com/embed?q=probolinggo',
+            'https://www.google.com/maps/embed?pb=abc',
             SiteSetting::get('maps_embed'),
         );
     }
@@ -95,7 +95,7 @@ class AdminSettingsTest extends TestCase
             'whatsapp' => '0812',
             'email' => 'bukan-email',
             'operational_hours' => 'Jam kerja',
-            'maps_embed' => 'https://maps.example.com/embed',
+            'maps_embed' => 'https://www.google.com/maps/embed?pb=abc',
         ])->assertSessionHasErrors('email');
     }
 }

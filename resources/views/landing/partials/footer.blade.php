@@ -4,8 +4,8 @@
     <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <div>
-                <a href="#beranda" class="flex items-center gap-3" aria-label="Pondok Pesantren Nurur Rahmah — Beranda">
-                    <x-landing.logo class="h-12 w-12 shrink-0" />
+                <a href="{{ route('home') }}#beranda" class="flex items-center gap-3" aria-label="Pondok Pesantren Nurur Rahmah — Beranda">
+                    <x-landing.logo :src="$logo ?? null" round class="h-12 w-12 shrink-0" />
                     <span class="leading-tight">
                         <span class="block font-arabic text-xl">Nurur Rahmah</span>
                         <span class="block text-[10px] font-semibold uppercase tracking-[0.25em] text-cream-100/60">Pondok Pesantren</span>
@@ -46,7 +46,7 @@
                 <ul class="mt-5 space-y-3 text-sm text-cream-100/70">
                     @foreach ($programs as $program)
                         <li>
-                            <a href="#kegiatan" class="transition hover:text-cream-50">{{ $program['title'] }}</a>
+                            <a href="{{ route('home') }}#kegiatan" class="transition hover:text-cream-50">{{ $program['title'] }}</a>
                         </li>
                     @endforeach
                 </ul>

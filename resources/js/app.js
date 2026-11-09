@@ -30,28 +30,48 @@ programTabs.forEach((tab) => {
 
 const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
 
+const hashFromHref = (href) => {
+    if (!href) {
+        return null;
+    }
+
+    try {
+        const hash = new URL(href, window.location.origin).hash;
+
+        return hash && hash !== '#' ? hash : null;
+    } catch {
+        return null;
+    }
+};
+
 if (navLinks.length > 0 && 'IntersectionObserver' in window) {
     const observedSections = navLinks
-        .map((link) => document.querySelector(link.getAttribute('href')))
+        .map((link) => {
+            const hash = hashFromHref(link.getAttribute('href'));
+
+            return hash ? document.getElementById(hash.slice(1)) : null;
+        })
         .filter((section) => section instanceof HTMLElement);
 
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) {
-                    return;
-                }
+    if (observedSections.length > 0) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    }
 
-                navLinks.forEach((link) => {
-                    const isActive = link.getAttribute('href') === `#${entry.target.id}`;
-                    link.classList.toggle('is-active', isActive);
+                    navLinks.forEach((link) => {
+                        const isActive = hashFromHref(link.getAttribute('href')) === `#${entry.target.id}`;
+                        link.classList.toggle('is-active', isActive);
+                    });
                 });
-            });
-        },
-        { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
-    );
+            },
+            { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
+        );
 
-    observedSections.forEach((section) => observer.observe(section));
+        observedSections.forEach((section) => observer.observe(section));
+    }
 }
 
 Alpine.start();

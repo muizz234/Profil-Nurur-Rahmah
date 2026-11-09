@@ -8,8 +8,15 @@
         </div>
 
         <div>
-            <label for="category" class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Kategori</label>
-            <input id="category" name="category" type="text" value="{{ old('category', $galeri?->category) }}" class="field-input mt-2" placeholder="Tahfidz, Akademik, Fasilitas...">
+            <label for="category_id" class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Kategori</label>
+            <select id="category_id" name="category_id" class="field-input mt-2">
+                <option value="">Tanpa kategori</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @selected((int) old('category_id', $galeri?->category_id) === $category->id)>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
     </div>
 

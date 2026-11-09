@@ -7,7 +7,7 @@
                 description="Cerita tentang prestasi santri, agenda pesantren, dan pemikiran yang kami bagikan untuk umat."
             />
 
-            <a href="#berita" class="btn-outline shrink-0">
+            <a href="{{ route('news.index') }}" class="btn-outline shrink-0 transition-all duration-300 hover:scale-105 hover:shadow-md">
                 Semua berita
                 <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
                     <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

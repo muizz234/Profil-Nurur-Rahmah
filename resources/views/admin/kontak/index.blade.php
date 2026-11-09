@@ -40,7 +40,10 @@
 
                 <div>
                     <label for="maps_embed" class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Google Maps</label>
-                    <textarea id="maps_embed" name="maps_embed" rows="5" class="field-input mt-2" required>{{ old('maps_embed', $settings['maps_embed']) }}</textarea>
+                    <textarea id="maps_embed" name="maps_embed" rows="5" class="field-input mt-2 @error('maps_embed') border-red-500 @enderror" required aria-describedby="maps_embed_error">{{ old('maps_embed', $settings['maps_embed']) }}</textarea>
+                    @error('maps_embed')
+                        <p id="maps_embed_error" class="mt-1.5 text-xs font-semibold text-red-600">{{ $message }}</p>
+                    @enderror
                     <p class="mt-2 text-xs text-slate-500">Tempelkan URL embed Google Maps atau kode <code class="rounded bg-slate-100 px-1 py-0.5">&lt;iframe&gt;</code>. Sistem akan menyimpan URL-nya saja.</p>
                 </div>
             </div>
@@ -54,15 +57,30 @@
         <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-6">
             <h2 class="text-sm font-bold uppercase tracking-[0.15em] text-slate-500">Pratinjau Peta</h2>
 
+            @php
+                $previewMapUrl = \App\Support\ContentSupport::extractGoogleMapsUrl((string) old('maps_embed', $settings['maps_embed']));
+                $previewMapUrl = ($previewMapUrl !== null && (parse_url($previewMapUrl, PHP_URL_SCHEME) === 'https')) ? $previewMapUrl : null;
+            @endphp
+
             <div class="mt-5 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-                <iframe
-                    src="{{ old('maps_embed', $settings['maps_embed']) }}"
-                    title="Pratinjau peta lokasi"
-                    class="h-72 w-full"
-                    style="border:0;"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                ></iframe>
+                @if($previewMapUrl)
+                    <iframe
+                        src="{{ $previewMapUrl }}"
+                        title="Pratinjau peta lokasi"
+                        class="h-72 w-full"
+                        style="border:0;"
+                        loading="lazy"
+                        sandbox="allow-scripts allow-same-origin"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                @else
+                    <div class="flex h-72 w-full items-center justify-center p-6">
+                        <p class="max-w-md text-center text-xs leading-relaxed text-slate-500">
+                            Pratinjau peta tidak tersedia karena URL belum valid (gunakan URL https Google Maps, contoh: https://www.google.com/maps/...).
+                            Alamat: <span class="block font-medium text-slate-700">{{ old('address', $settings['address']) }}</span>
+                        </p>
+                    </div>
+                @endif
             </div>
 
             <p class="mt-3 text-xs leading-relaxed text-slate-500">

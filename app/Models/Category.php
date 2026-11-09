@@ -19,4 +19,9 @@ class Category extends Model
     {
         return $this->hasMany(Berita::class);
     }
+
+    public function galeris(): HasMany
+    {
+        return $this->hasMany(Galeri::class);
+    }
 }

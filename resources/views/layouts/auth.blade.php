@@ -27,7 +27,7 @@
             <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-xl sm:p-8">
                 <div class="flex flex-col items-center text-center">
                     <a href="{{ route('home') }}" class="transition hover:opacity-90" aria-label="Kembali ke beranda Pondok Pesantren Nurur Rahmah">
-                        <x-landing.logo class="h-14 w-14" />
+                        <x-landing.logo :src="$logo ?? null" round class="h-14 w-14" />
                     </a>
 
                     <p class="mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">

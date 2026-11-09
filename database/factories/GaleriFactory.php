@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Galeri;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -24,7 +25,7 @@ class GaleriFactory extends Factory
             'title' => Str::title($title),
             'image_path' => 'galeri/'.Str::uuid().'.jpg',
             'caption' => fake()->sentence(),
-            'category' => fake()->randomElement(['Tahfidz', 'Akademik', 'Fasilitas', 'Kegiatan']),
+            'category_id' => Category::factory(),
         ];
     }
 }

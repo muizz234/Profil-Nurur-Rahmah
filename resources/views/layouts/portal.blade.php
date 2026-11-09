@@ -18,7 +18,7 @@
     <header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 shadow-sm backdrop-blur-md">
         <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
             <a href="{{ route('home') }}" class="flex items-center gap-2.5" aria-label="Beranda Pondok Pesantren Nurur Rahmah">
-                <x-landing.logo class="h-9 w-9" />
+                <x-landing.logo :src="$logo ?? null" round class="h-9 w-9" />
                 <span class="text-sm font-bold tracking-tight text-slate-800">Nurur Rahmah</span>
             </a>
 

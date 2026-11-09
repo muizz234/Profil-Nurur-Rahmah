@@ -95,9 +95,56 @@ class SiteLogoTest extends TestCase
 
     public function test_frontend_header_uses_the_default_logo_when_none_is_uploaded(): void
     {
+        $this->assertFileExists(public_path('images/logo.png'));
+
         $this->get(route('home'))
             ->assertOk()
-            ->assertSee('data-logo-fallback', false);
+            ->assertSee('images/logo.png', false)
+            ->assertDontSee('data-logo-fallback', false);
+    }
+
+    public function test_hero_displays_the_uploaded_site_logo(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('logos/hero-logo.png', 'logo');
+        SiteSetting::set('site_logo', 'logos/hero-logo.png');
+
+        $response = $this->get(route('home'))->assertOk();
+
+        $response->assertSee('data-hero-logo', false);
+        $this->assertMatchesRegularExpression(
+            '/<img[^>]*src="[^"]*storage\/logos\/hero-logo\.png"[^>]*data-hero-logo/',
+            $response->getContent()
+        );
+    }
+
+    public function test_hero_uses_the_default_logo_when_none_is_uploaded(): void
+    {
+        $response = $this->get(route('home'))->assertOk();
+
+        $response->assertSee('data-hero-logo', false);
+        $this->assertMatchesRegularExpression(
+            '/<img[^>]*src="[^"]*images\/logo\.png"[^>]*data-hero-logo/',
+            $response->getContent()
+        );
+    }
+
+    public function test_auth_pages_use_the_default_logo_when_none_is_uploaded(): void
+    {
+        $this->get(route('login'))
+            ->assertOk()
+            ->assertSee('images/logo.png', false)
+            ->assertDontSee('data-logo-fallback', false);
+    }
+
+    public function test_portal_pages_use_the_default_logo_when_none_is_uploaded(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('images/logo.png', false)
+            ->assertDontSee('data-logo-fallback', false);
     }
 
     /**

@@ -4,20 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Concerns\HandlesUploads;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreKegiatanRequest;
+use App\Http\Requests\Admin\UpdateKegiatanRequest;
 use App\Models\Kegiatan;
+use App\Support\ContentSupport;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class KegiatanController extends Controller
 {
     use HandlesUploads;
 
-    /**
-     * Display a listing of the activities.
-     */
     public function index(): View
     {
         $kegiatans = Kegiatan::query()->latest('id')->paginate(10);
@@ -27,26 +24,19 @@ class KegiatanController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new activity.
-     */
     public function create(): View
     {
         return view('admin.kegiatan.create', [
-            'categories' => $this->categoryOptions(),
+            'categories' => ContentSupport::kegiatanCategoryOptions(),
         ]);
     }
 
-    /**
-     * Store a newly created activity.
-     */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreKegiatanRequest $request): RedirectResponse
     {
-        $validated = $this->validateKegiatan($request);
+        $validated = $request->validated();
 
         $data = [
             'title' => $validated['title'],
-            'slug' => $this->uniqueSlug($validated['title']),
             'description' => $validated['description'],
             'category' => $validated['category'],
             'is_active' => $request->boolean('is_active'),
@@ -56,34 +46,32 @@ class KegiatanController extends Controller
             $data['icon_or_image'] = $this->storeImage($request->file('icon_or_image'), 'kegiatan');
         }
 
-        Kegiatan::create($data);
+        ContentSupport::retryOnDuplicateSlug(function () use ($data, $validated) {
+            Kegiatan::create([
+                ...$data,
+                'slug' => ContentSupport::uniqueSlug(Kegiatan::class, $validated['title']),
+            ]);
+        });
 
         return redirect()
             ->route('admin.kegiatan.index')
             ->with('success', 'Kegiatan berhasil ditambahkan.');
     }
 
-    /**
-     * Show the form for editing the specified activity.
-     */
     public function edit(Kegiatan $kegiatan): View
     {
         return view('admin.kegiatan.edit', [
             'kegiatan' => $kegiatan,
-            'categories' => $this->categoryOptions(),
+            'categories' => ContentSupport::kegiatanCategoryOptions(),
         ]);
     }
 
-    /**
-     * Update the specified activity.
-     */
-    public function update(Request $request, Kegiatan $kegiatan): RedirectResponse
+    public function update(UpdateKegiatanRequest $request, Kegiatan $kegiatan): RedirectResponse
     {
-        $validated = $this->validateKegiatan($request);
+        $validated = $request->validated();
 
         $data = [
             'title' => $validated['title'],
-            'slug' => $this->uniqueSlug($validated['title'], $kegiatan->id),
             'description' => $validated['description'],
             'category' => $validated['category'],
             'is_active' => $request->boolean('is_active'),
@@ -94,16 +82,18 @@ class KegiatanController extends Controller
             $data['icon_or_image'] = $this->storeImage($request->file('icon_or_image'), 'kegiatan');
         }
 
-        $kegiatan->update($data);
+        ContentSupport::retryOnDuplicateSlug(function () use ($kegiatan, $data, $validated) {
+            $kegiatan->update([
+                ...$data,
+                'slug' => ContentSupport::uniqueSlug(Kegiatan::class, $validated['title'], $kegiatan->id),
+            ]);
+        });
 
         return redirect()
             ->route('admin.kegiatan.index')
             ->with('success', 'Kegiatan berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified activity.
-     */
     public function destroy(Kegiatan $kegiatan): RedirectResponse
     {
         $this->deleteImage($kegiatan->icon_or_image);
@@ -113,57 +103,5 @@ class KegiatanController extends Controller
         return redirect()
             ->route('admin.kegiatan.index')
             ->with('success', 'Kegiatan berhasil dihapus.');
-    }
-
-    /**
-     * Validate the activity request.
-     *
-     * @return array<string, mixed>
-     */
-    private function validateKegiatan(Request $request): array
-    {
-        return $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'category' => ['required', Rule::in(array_keys($this->categoryOptions()))],
-            'icon_or_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'is_active' => ['nullable', 'boolean'],
-        ]);
-    }
-
-    /**
-     * Build a unique slug for the activity.
-     */
-    private function uniqueSlug(string $title, ?int $ignoreId = null): string
-    {
-        $base = Str::slug($title);
-        $slug = $base;
-        $counter = 2;
-
-        while (
-            Kegiatan::query()
-                ->where('slug', $slug)
-                ->when($ignoreId, fn ($query) => $query->whereKeyNot($ignoreId))
-                ->exists()
-        ) {
-            $slug = $base.'-'.$counter++;
-        }
-
-        return $slug;
-    }
-
-    /**
-     * Available activity categories.
-     *
-     * @return array<string, string>
-     */
-    private function categoryOptions(): array
-    {
-        return [
-            'tahfidz' => 'Tahfidz',
-            'kitab_kuning' => 'Kitab Kuning',
-            'formal' => 'Pendidikan Formal',
-            'ekstrakurikuler' => 'Ekstrakurikuler',
-        ];
     }
 }

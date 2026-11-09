@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Galeri;
 use App\Models\Kegiatan;
 use App\Models\User;
@@ -77,11 +78,12 @@ class AdminKegiatanGaleriTest extends TestCase
     {
         Storage::fake('public');
         $admin = User::factory()->admin()->create();
+        $category = Category::factory()->create(['name' => 'Kegiatan']);
 
         $this->actingAs($admin)->post(route('admin.galeri.store'), [
             'title' => 'Kegiatan Santri',
             'caption' => 'Suasana kegiatan.',
-            'category' => 'Kegiatan',
+            'category_id' => $category->id,
             'image' => UploadedFile::fake()->image('galeri.jpg'),
         ])->assertRedirect(route('admin.galeri.index'));
 

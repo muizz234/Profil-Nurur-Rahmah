@@ -7,8 +7,8 @@
                 description="Setiap program dirancang untuk menyeimbangkan iman, ilmu, dan keterampilan hidup — dengan pendampingan yang konsisten setiap hari."
             />
 
-            <a href="#kontak" class="btn-outline shrink-0">
-                Jadwalkan kunjungan
+            <a href="#kegiatan" class="btn-outline shrink-0">
+                Lihat Semua Program
                 <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
                     <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -26,14 +26,14 @@
                             aria-controls="panel-{{ $program['id'] }}"
                             aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
                             data-program-tab="{{ $program['id'] }}"
-                            class="group flex min-w-[220px] items-center gap-4 rounded-2xl border px-4 py-4 text-left transition lg:min-w-0 {{ $index === 0 ? 'border-emerald-900 bg-emerald-900 text-cream-50 shadow-md' : 'border-emerald-900/10 bg-white/70 text-emerald-950 hover:border-emerald-900/30 hover:bg-white' }}"
+                            class="group flex min-w-[220px] items-center gap-4 rounded-2xl border px-4 py-4 text-left transition-all duration-300 ease-in-out lg:min-w-0 border-emerald-900/15 bg-white shadow-sm hover:-translate-y-0.5 hover:translate-x-1 hover:border-emerald-900 hover:bg-emerald-950 hover:shadow-md hover:shadow-emerald-950/20 [&[aria-selected=true]]:border-emerald-900 [&[aria-selected=true]]:bg-emerald-900 [&[aria-selected=true]]:shadow-md [&[aria-selected=true]]:shadow-emerald-950/20"
                         >
-                            <span class="font-arabic text-lg opacity-60">0{{ $index + 1 }}</span>
+                            <span class="font-arabic text-lg text-gray-500 transition-colors duration-300 group-hover:text-white group-[[aria-selected=true]]:text-white">0{{ $index + 1 }}</span>
                             <span class="flex-1">
-                                <span class="block text-sm font-semibold">{{ $program['title'] }}</span>
-                                <span class="mt-0.5 block text-xs opacity-70">{{ $program['tag'] }}</span>
+                                <span class="block text-sm font-semibold text-gray-900 transition-colors duration-300 group-hover:text-white group-[[aria-selected=true]]:text-white">{{ $program['title'] }}</span>
+                                <span class="mt-0.5 block text-xs text-gray-600 transition-colors duration-300 group-hover:text-gray-200 group-[[aria-selected=true]]:text-gray-200">{{ $program['tag'] }}</span>
                             </span>
-                            <svg viewBox="0 0 20 20" class="h-4 w-4 shrink-0 opacity-60" fill="none" aria-hidden="true">
+                            <svg viewBox="0 0 20 20" class="h-4 w-4 shrink-0 text-emerald-900 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white group-[[aria-selected=true]]:text-white" fill="none" aria-hidden="true">
                                 <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </button>

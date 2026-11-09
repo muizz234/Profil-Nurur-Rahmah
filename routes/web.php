@@ -13,11 +13,16 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PublicBeritaController;
+use App\Http\Controllers\PublicGaleriController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('home');
 
+Route::get('/berita', [PublicBeritaController::class, 'index'])->name('news.index');
+
 Route::get('/berita/{berita:slug}', [PublicBeritaController::class, 'show'])->name('berita.show');
+
+Route::get('/galeri', [PublicGaleriController::class, 'index'])->name('galeri.index');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');

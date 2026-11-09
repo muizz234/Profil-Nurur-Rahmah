@@ -40,4 +40,32 @@ class PublicBeritaTest extends TestCase
 
         $this->get(route('berita.show', $berita))->assertNotFound();
     }
+
+    public function test_news_index_shows_only_published_articles(): void
+    {
+        Berita::factory()->create(['title' => 'Berita Terbit', 'is_published' => true, 'published_at' => now()->subDay()]);
+        Berita::factory()->unpublished()->create(['title' => 'Berita Draf']);
+        Berita::factory()->create(['title' => 'Berita Terjadwal', 'is_published' => true, 'published_at' => now()->addDay()]);
+
+        $response = $this->get(route('news.index'));
+
+        $response->assertOk();
+        $response->assertSee('Berita Terbit');
+        $response->assertDontSee('Berita Draf');
+        $response->assertDontSee('Berita Terjadwal');
+    }
+
+    public function test_news_index_paginates_published_articles(): void
+    {
+        for ($i = 1; $i <= 10; $i++) {
+            Berita::factory()->create([
+                'title' => "Berita Nomor {$i}",
+                'is_published' => true,
+                'published_at' => now()->subDays($i),
+            ]);
+        }
+
+        $this->get(route('news.index'))->assertOk()->assertSee('Berita Nomor 1')->assertDontSee('Berita Nomor 10');
+        $this->get(route('news.index', ['page' => 2]))->assertOk()->assertSee('Berita Nomor 10');
+    }
 }

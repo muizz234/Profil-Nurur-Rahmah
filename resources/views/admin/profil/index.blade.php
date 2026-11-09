@@ -22,11 +22,11 @@
                         id="site_logo"
                         name="site_logo"
                         type="file"
-                        accept="image/png,image/jpeg,image/svg+xml,image/webp"
+                        accept="image/png,image/jpeg,image/webp"
                         class="mt-2 block w-full text-xs text-slate-600 file:mr-3 file:rounded-full file:border-0 file:bg-emerald-700 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-emerald-800"
                         @change="if (logoPreview) URL.revokeObjectURL(logoPreview); logoPreview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
                     >
-                    <p class="mt-1.5 text-xs text-slate-500">PNG, JPG, WEBP, atau SVG. Maksimal 2 MB. Logo tampil di header situs.</p>
+                    <p class="mt-1.5 text-xs text-slate-500">PNG, JPG, atau WEBP. Maksimal 2 MB. Logo tampil di header situs.</p>
 
                     @error('site_logo')
                         <p class="mt-1.5 text-xs font-semibold text-red-600">{{ $message }}</p>
@@ -37,9 +37,9 @@
                     <span class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Pratinjau Logo</span>
 
                     <div class="mt-2 flex h-28 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 p-4">
-                        <img x-show="logoPreview" x-cloak :src="logoPreview" alt="Pratinjau logo baru" class="h-16 w-16 object-contain">
+                        <img x-show="logoPreview" x-cloak :src="logoPreview" alt="Pratinjau logo baru" class="h-16 w-16 rounded-full object-contain">
                         <div x-show="! logoPreview">
-                            <x-landing.logo :src="$settings['site_logo']" class="h-16 w-16" />
+                            <x-landing.logo :src="$settings['site_logo']" round class="h-16 w-16" />
                         </div>
                     </div>
 
@@ -82,6 +82,47 @@
                         <label for="total_pengajar" class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Jumlah Pengajar</label>
                         <input id="total_pengajar" name="total_pengajar" type="text" value="{{ old('total_pengajar', $settings['total_pengajar']) }}" class="field-input mt-2" required>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:p-6">
+            <h2 class="text-sm font-bold uppercase tracking-[0.15em] text-slate-500">Background Hero</h2>
+
+            <div x-data="{ heroPreview: null }" class="mt-5 grid gap-6 lg:grid-cols-3">
+                <div class="lg:col-span-2">
+                    <label for="hero_background_image" class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Foto Background Hero</label>
+                    <input
+                        id="hero_background_image"
+                        name="hero_background_image"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        class="mt-2 block w-full text-xs text-slate-600 file:mr-3 file:rounded-full file:border-0 file:bg-emerald-700 file:px-4 file:py-2 file:text-xs file:font-semibold file:text-white hover:file:bg-emerald-800"
+                        @change="if (heroPreview) URL.revokeObjectURL(heroPreview); heroPreview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
+                    >
+                    <p class="mt-1.5 text-xs text-slate-500">JPG, PNG, atau WEBP. Maksimal 3 MB. Rasio ideal 16:9.</p>
+
+                    @error('hero_background_image')
+                        <p class="mt-1.5 text-xs font-semibold text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <span class="block text-xs font-semibold uppercase tracking-[0.15em] text-slate-500">Pratinjau Background</span>
+
+                    <div class="relative mt-2 aspect-[16/9] overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+                        <img x-show="heroPreview" x-cloak :src="heroPreview" alt="Pratinjau background hero baru" class="h-full w-full object-cover">
+                        <div x-show="! heroPreview" class="h-full w-full">
+                            <x-landing.smart-image
+                                :src="$settings['hero_background_image']"
+                                alt="Background hero saat ini"
+                                label="Background Hero"
+                                class="h-full w-full"
+                            />
+                        </div>
+                    </div>
+
+                    <p class="mt-2 text-xs text-slate-500">Pratinjau muncul otomatis setelah memilih file baru.</p>
                 </div>
             </div>
         </section>

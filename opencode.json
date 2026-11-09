@@ -1,14 +1,135 @@
 {
     "$schema": "https://opencode.ai/config.json",
+    "default_agent": "arga",
+    "instructions": ["AGENTS.md"],
+    "compaction": {
+        "auto": true,
+        "prune": true
+    },
+    "permission": {
+        "*": "allow",
+        "edit": "allow",
+        "task": "allow",
+        "webfetch": "allow",
+        "bash": {
+            "*": "allow",
+            "rm -rf*": "deny",
+            "git push*": "deny",
+            "git reset --hard*": "deny",
+            "php artisan migrate:fresh*": "deny",
+            "php artisan db:wipe*": "deny"
+        }
+    },
     "mcp": {
         "laravel-boost": {
             "type": "local",
             "enabled": true,
-            "command": [
-                "php",
-                "artisan",
-                "boost:mcp"
-            ]
+            "command": ["php", "artisan", "boost:mcp"]
+        }
+    },
+    "agent": {
+        "arga": {
+            "description": "Arga - Lead proyek Laravel. Memecah tugas dan mendelegasikan ke tim",
+            "mode": "primary",
+            "color": "#f97316",
+            "temperature": 0.2,
+            "steps": 30,
+            "prompt": "Kamu Arga, lead proyek Laravel. Pecah tugas lalu delegasikan: @raka (rancangan), @bima (backend), @citra (tampilan), @dewi (database), @eka (test), @fajar (review). Beri instruksi singkat dan spesifik, minta laporan ringkas. Jangan menulis kode besar sendiri. Jawab Bahasa Indonesia, maksimal 5 baris, tanpa mengulang kode.",
+            "permission": {
+                "laravel-boost_*": "deny",
+                "laravel-boost_application-info": "allow",
+                "laravel-boost_list-routes": "allow",
+                "laravel-boost_database-schema": "allow",
+                "laravel-boost_search-docs": "allow"
+            }
+        },
+        "raka": {
+            "description": "Raka - Arsitek: rencana fitur, relasi, route, urutan kerja (hanya baca)",
+            "mode": "subagent",
+            "color": "#3b82f6",
+            "temperature": 0.3,
+            "steps": 8,
+            "prompt": "Kamu Raka, arsitek Laravel. Baca kode seperlunya, lalu buat rencana ringkas: file yang dibuat/diubah, relasi model, route, validasi, urutan kerja. Jangan edit file. Maksimal 15 baris.",
+            "permission": {
+                "edit": "deny",
+                "bash": "deny",
+                "laravel-boost_*": "deny",
+                "laravel-boost_application-info": "allow",
+                "laravel-boost_list-routes": "allow",
+                "laravel-boost_database-schema": "allow",
+                "laravel-boost_search-docs": "allow"
+            }
+        },
+        "bima": {
+            "description": "Bima - Backend: migration, model, controller, request, service, policy",
+            "mode": "subagent",
+            "color": "#22c55e",
+            "temperature": 0.2,
+            "steps": 20,
+            "prompt": "Kamu Bima, backend Laravel. Pakai artisan make:*, Form Request, Eloquent + eager loading, policy untuk otorisasi. Cek search-docs hanya jika ragu API. Jangan sentuh view. Lapor 3 baris: file yang dibuat/diubah.",
+            "permission": {
+                "laravel-boost_*": "deny",
+                "laravel-boost_search-docs": "allow",
+                "laravel-boost_database-schema": "allow",
+                "laravel-boost_last-error": "allow"
+            }
+        },
+        "citra": {
+            "description": "Citra - Frontend: Blade, Livewire, Inertia, Tailwind, form dan tabel",
+            "mode": "subagent",
+            "color": "#ec4899",
+            "temperature": 0.4,
+            "steps": 20,
+            "prompt": "Kamu Citra, frontend Laravel. Pakai stack yang sudah ada (Blade/Livewire/Inertia + Tailwind), jangan tambah library. UI responsif, error validasi jelas. Lapor 3 baris: file yang dibuat/diubah.",
+            "permission": {
+                "laravel-boost_*": "deny",
+                "laravel-boost_browser-logs": "allow",
+                "laravel-boost_search-docs": "allow"
+            }
+        },
+        "dewi": {
+            "description": "Dewi - Database: skema, migration, seeder, factory, optimasi query",
+            "mode": "subagent",
+            "color": "#a855f7",
+            "temperature": 0.1,
+            "steps": 15,
+            "prompt": "Kamu Dewi, database engineer. Lihat skema asli lewat database-schema sebelum bertindak. Migration aman (index, foreign key, tipe tepat), buat factory dan seeder. Jangan hapus data. Lapor 3 baris.",
+            "permission": {
+                "laravel-boost_*": "deny",
+                "laravel-boost_database-schema": "allow",
+                "laravel-boost_database-query": "allow"
+            }
+        },
+        "eka": {
+            "description": "Eka - Tester: menulis dan menjalankan Pest/PHPUnit, memperbaiki test gagal",
+            "mode": "subagent",
+            "color": "#eab308",
+            "temperature": 0.1,
+            "steps": 15,
+            "prompt": "Kamu Eka, QA Laravel. Tulis feature/unit test (Pest atau PHPUnit sesuai proyek) dengan RefreshDatabase dan factory. Jalankan hanya test yang relevan. Lapor hasil: lulus/gagal + penyebab dalam 5 baris.",
+            "permission": {
+                "laravel-boost_*": "deny",
+                "laravel-boost_last-error": "allow",
+                "laravel-boost_read-log-entries": "allow"
+            }
+        },
+        "fajar": {
+            "description": "Fajar - Reviewer: keamanan, performa, kualitas kode (hanya baca)",
+            "mode": "subagent",
+            "color": "#ef4444",
+            "temperature": 0.2,
+            "steps": 8,
+            "prompt": "Kamu Fajar, reviewer Laravel. Periksa mass assignment, validasi, otorisasi, SQL injection, XSS, N+1, penanganan error. Daftar temuan dari paling kritis: file, masalah, saran. Jangan edit file. Maksimal 10 temuan.",
+            "permission": {
+                "edit": "deny",
+                "laravel-boost_*": "deny",
+                "bash": {
+                    "*": "deny",
+                    "git diff*": "allow",
+                    "git log*": "allow",
+                    "git status*": "allow"
+                }
+            }
         }
     }
 }

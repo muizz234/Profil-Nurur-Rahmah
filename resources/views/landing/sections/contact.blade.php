@@ -19,9 +19,8 @@
         <div class="mt-8 grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-12 lg:items-stretch">
             <div class="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:col-span-5 lg:grid-cols-1 xl:grid-cols-2">
                 <a
-                    href="{{ $contact['maps_url'] }}"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="{{ $contact['maps_url'] ?: '#kontak' }}"
+                    @if($contact['map_embed']) target="_blank" rel="noopener noreferrer" @endif
                     aria-label="Lihat alamat Pondok Pesantren Nurur Rahmah di Google Maps"
                     class="{{ $cardBase }} {{ $cardAction }}"
                 >
@@ -96,27 +95,37 @@
             </div>
 
             <div class="relative h-60 overflow-hidden rounded-xl border border-slate-100/80 bg-white shadow-sm md:h-80 md:rounded-2xl lg:col-span-7 lg:h-auto lg:min-h-[420px] lg:self-stretch">
-                <iframe
-                    src="{{ $contact['map_embed'] }}"
-                    title="Peta lokasi Pondok Pesantren Nurur Rahmah"
-                    class="absolute inset-0 h-full w-full"
-                    style="border:0;"
-                    allowfullscreen
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                ></iframe>
+                @if($contact['map_embed'])
+                    <iframe
+                        src="{{ $contact['map_embed'] }}"
+                        title="Peta lokasi Pondok Pesantren Nurur Rahmah"
+                        class="absolute inset-0 h-full w-full"
+                        style="border:0;"
+                        allowfullscreen
+                        loading="lazy"
+                        sandbox="allow-scripts allow-same-origin"
+                        referrerpolicy="no-referrer-when-downgrade"
+                    ></iframe>
 
-                <a
-                    href="{{ $contact['maps_url'] }}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-2 text-[11px] font-semibold text-emerald-700 shadow-sm backdrop-blur transition hover:bg-white active:scale-[0.98] sm:bottom-4 sm:right-4 sm:px-4 sm:text-xs"
-                >
-                    Buka di Google Maps
-                    <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
-                        <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
+                    <a
+                        href="{{ $contact['maps_url'] }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-2 text-[11px] font-semibold text-emerald-700 shadow-sm backdrop-blur transition hover:bg-white active:scale-[0.98] sm:bottom-4 sm:right-4 sm:px-4 sm:text-xs"
+                    >
+                        Buka di Google Maps
+                        <svg viewBox="0 0 20 20" class="h-4 w-4" fill="none" aria-hidden="true">
+                            <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                @else
+                    <div class="flex h-full w-full items-center justify-center bg-slate-50 p-6">
+                        <p class="max-w-md text-center text-sm leading-relaxed text-slate-600">
+                            Peta lokasi belum tersedia. Alamat kami:
+                            <span class="mt-1 block font-medium text-slate-800">{{ $contact['address'] }}</span>
+                        </p>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

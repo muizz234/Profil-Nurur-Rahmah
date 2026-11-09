@@ -32,6 +32,6 @@
         @yield('content')
     </main>
 
-    @include('landing.partials.footer', ['navItems' => $navItems, 'programs' => $programs, 'contact' => $contact])
+    @include('landing.partials.footer', ['navItems' => $navItems, 'programs' => $programs, 'contact' => $contact, 'logo' => $logo ?? null])
 </body>
 </html>
