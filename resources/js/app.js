@@ -2,21 +2,29 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-const programTabs = document.querySelectorAll('[data-program-tab]');
-const programPanels = document.querySelectorAll('[data-program-panel]');
+const programTabLists = Array.from(document.querySelectorAll('[data-program-tablist]'));
+const programTabs = Array.from(document.querySelectorAll('[data-program-tab]'));
+const programPanels = Array.from(document.querySelectorAll('[data-program-panel]'));
+
+const desktopProgramQuery = window.matchMedia('(min-width: 1024px)');
+
+const syncProgramOrientation = () => {
+    const orientation = desktopProgramQuery.matches ? 'vertical' : 'horizontal';
+
+    programTabLists.forEach((tablist) => {
+        tablist.setAttribute('aria-orientation', orientation);
+    });
+};
+
+syncProgramOrientation();
+desktopProgramQuery.addEventListener('change', syncProgramOrientation);
 
 const activateProgram = (id) => {
     programTabs.forEach((tab) => {
         const isActive = tab.dataset.programTab === id;
 
         tab.setAttribute('aria-selected', String(isActive));
-        tab.classList.toggle('border-emerald-900', isActive);
-        tab.classList.toggle('bg-emerald-900', isActive);
-        tab.classList.toggle('text-cream-50', isActive);
-        tab.classList.toggle('shadow-md', isActive);
-        tab.classList.toggle('border-emerald-900/10', !isActive);
-        tab.classList.toggle('bg-white/70', !isActive);
-        tab.classList.toggle('text-emerald-950', !isActive);
+        tab.tabIndex = isActive ? 0 : -1;
     });
 
     programPanels.forEach((panel) => {
@@ -24,9 +32,46 @@ const activateProgram = (id) => {
     });
 };
 
-programTabs.forEach((tab) => {
+programTabs.forEach((tab, index) => {
     tab.addEventListener('click', () => activateProgram(tab.dataset.programTab));
+
+    tab.addEventListener('keydown', (event) => {
+        const lastIndex = programTabs.length - 1;
+        let nextIndex;
+
+        switch (event.key) {
+            case 'ArrowRight':
+            case 'ArrowDown':
+                nextIndex = index === lastIndex ? 0 : index + 1;
+                break;
+            case 'ArrowLeft':
+            case 'ArrowUp':
+                nextIndex = index === 0 ? lastIndex : index - 1;
+                break;
+            case 'Home':
+                nextIndex = 0;
+                break;
+            case 'End':
+                nextIndex = lastIndex;
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+
+        const nextTab = programTabs[nextIndex];
+
+        activateProgram(nextTab.dataset.programTab);
+        nextTab.focus();
+    });
 });
+
+const initialProgramTab = programTabs.find((tab) => tab.getAttribute('aria-selected') === 'true') ?? programTabs[0];
+
+if (initialProgramTab) {
+    activateProgram(initialProgramTab.dataset.programTab);
+}
 
 const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
 

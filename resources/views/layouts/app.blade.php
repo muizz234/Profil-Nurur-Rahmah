@@ -28,7 +28,7 @@
 
     <x-header :nav-prefix="$navPrefix ?? ''" :brand-href="$brandHref ?? '#beranda'" :logo="$logo ?? null" />
 
-    <main id="konten">
+    <main id="konten" class="w-full overflow-x-hidden">
         @yield('content')
     </main>
 

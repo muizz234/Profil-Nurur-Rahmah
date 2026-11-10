@@ -43,7 +43,7 @@
             <x-landing.logo :src="$logo" round class="h-11 w-11 shrink-0 self-center sm:h-12 sm:w-12 xl:h-14 xl:w-14" />
 
             <span data-header-brand-text class="flex min-w-0 flex-col justify-center text-center">
-                <span data-header-brand-arabic dir="rtl" class="hidden w-full font-arabic text-center text-sm leading-tight text-emerald-700 sm:block xl:text-base">
+                <span data-header-brand-arabic dir="rtl" class="w-full font-arabic text-center text-sm leading-tight text-emerald-700 sm:block xl:text-base">
                     معهد نور الرحمة الإسلامي
                 </span>
                 <span class="block w-full text-center text-xs font-bold leading-tight tracking-wide text-slate-800 sm:text-sm xl:text-base">

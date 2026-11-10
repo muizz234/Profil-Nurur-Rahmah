@@ -69,9 +69,9 @@
             </div>
         </div>
 
-        <div class="mt-12 flex flex-col items-center justify-between gap-3 border-t border-cream-50/10 pt-6 text-xs text-cream-100/50 sm:flex-row">
-            <p>&copy; {{ date('Y') }} Pondok Pesantren Nurur Rahmah. Semua hak dilindungi.</p>
-            <p class="font-arabic text-sm text-gold-400/80" dir="rtl">وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ</p>
+        <div class="mt-12 grid grid-cols-1 gap-3 border-t border-cream-50/10 pt-6 text-center text-xs text-cream-100/50 sm:grid-cols-3">
+            <p class="min-w-0 break-words sm:col-start-2">&copy; {{ date('Y') }} Pondok Pesantren Nurur Rahmah. Semua hak dilindungi.</p>
+            <p class="min-w-0 font-arabic text-sm text-gold-400/80 sm:col-start-3 sm:text-right" dir="rtl">وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ</p>
         </div>
     </div>
 </footer>
